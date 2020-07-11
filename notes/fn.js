@@ -19,7 +19,7 @@ const renderNotes = function (notes) {
     }
 
     notes.forEach(note => {
-        const dom = generateDomWithXButton(note)
+        const dom = generateDomWithXButtonAndWithEventListener(note)
         if (divElement != null) {
             divElement.appendChild(dom)
         }
@@ -37,7 +37,7 @@ const generateDom = function (note) {
 }
 
 /**
- * if you want to add a button with text next to it
+ * if you want to add a button(x) with text next to it
  * @param {a specific note with a button before it} note 
  */
 const generateDomWithXButton = function (note) {
@@ -51,4 +51,36 @@ const generateDomWithXButton = function (note) {
     innerSpanElement.innerText = note.note
     innerDivElement.appendChild(innerSpanElement)
     return innerDivElement
+}
+
+/**
+ * 
+ * @param {add an event listener to the button} note 
+ */
+const generateDomWithXButtonAndWithEventListener = function (note) {
+    //create a div element 
+    const innerDivElement = document.createElement('div')
+
+    //create a button element
+    const buttonElement = document.createElement('button')
+    buttonElement.innerText = 'x'
+    innerDivElement.appendChild(buttonElement)
+
+    buttonElement.addEventListener('click', () => {
+        //delete the element
+        deleteNote(note.id)
+    })
+
+    //add a span element 
+    const innerSpanElement = document.createElement('span')
+    innerSpanElement.innerText = note.note
+    innerDivElement.appendChild(innerSpanElement)
+    return innerDivElement
+}
+
+const deleteNote = function (id) {
+    const index = notes.findIndex(note => note.id === id)
+    notes.splice(index, 1)
+    saveNotes(notes)
+    renderNotes(notes)
 }
