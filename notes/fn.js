@@ -16,15 +16,15 @@ const getNotes = function () {
 const renderNotes = function (notes) {
 
     if (divElement !== null) {
-       divElement.innerHTML = ''
+        divElement.innerHTML = ''
     }
 
 
     notes.forEach(note => {
         const dom = generateDomWithXElementAndLinkToNextPage(note)
-       if(divElement!== null){
+        if (divElement !== null) {
             divElement.appendChild(dom)
-       }
+        }
     })
 }
 
@@ -84,7 +84,7 @@ const generateDomWithXButtonAndWithEventListener = function (note) {
  * 
  * @param {add an event listener to button and link to next page} note 
  */
-const generateDomWithXElementAndLinkToNextPage = function(note){
+const generateDomWithXElementAndLinkToNextPage = function (note) {
     //create a div element
     const divEl = document.createElement('div')
 
@@ -100,9 +100,14 @@ const generateDomWithXElementAndLinkToNextPage = function(note){
     //add an anchor
     const anchorEl = document.createElement('a')
     anchorEl.textContent = note.text
-    anchorEl.setAttribute('href',`edit.html#${note.id}`)
+    anchorEl.setAttribute('href', `edit.html#${note.id}`)
 
     divEl.appendChild(anchorEl)
+
+    //add the text Area
+    const textAreaEl = document.createElement('span')
+    textAreaEl.textContent = note.textArea
+    divEl.appendChild(textAreaEl)
     return divEl
 }
 

@@ -32,3 +32,12 @@ document.querySelector('#deleteButton').addEventListener('click', () => {
     deleteNote(noteId)
     location.assign('index.html')
 })
+
+//modify the text area and save to local storage
+textareEl.addEventListener('input', e => {
+    const text = e.target.value
+
+    note.textArea = text
+    saveNotes(notes)
+
+})
