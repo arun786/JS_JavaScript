@@ -39,5 +39,4 @@ textareEl.addEventListener('input', e => {
 
     note.textArea = text
     saveNotes(notes)
-
 })
