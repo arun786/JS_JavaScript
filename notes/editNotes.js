@@ -18,9 +18,16 @@ if (note === undefined) {
 //else populate the text and text area
 const txtEl = document.querySelector('#editTxt')
 const textareEl = document.querySelector('#editNotesTxtArea')
+const spanEl = document.querySelector('#lastEdited')
 
 txtEl.value = note.text
 textareEl.value = note.textArea
+const createdDate = note.createdAt
+const modifiedDate = note.updatedAt
+
+if (createdDate !== modifiedDate) {
+    spanEl.textContent = latestModifiedTime(modifiedDate)
+}
 
 //when a user clicks on back button he should be redirected to index.html page
 document.querySelector('#backButton').addEventListener('click', () => {
@@ -36,7 +43,12 @@ document.querySelector('#deleteButton').addEventListener('click', () => {
 //modify the text area and save to local storage
 textareEl.addEventListener('input', e => {
     const text = e.target.value
-
+    const modifiedAt = moment().valueOf()
     note.textArea = text
+    note.updatedAt = modifiedAt
+
     saveNotes(notes)
+    //add the time to div when the last modification was done
+    spanEl.textContent = latestModifiedTime(note.modifiedAt)
 })
+

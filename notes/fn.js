@@ -104,10 +104,6 @@ const generateDomWithXElementAndLinkToNextPage = function (note) {
 
     divEl.appendChild(anchorEl)
 
-    //add the text Area
-    const textAreaEl = document.createElement('span')
-    textAreaEl.textContent = note.textArea
-    divEl.appendChild(textAreaEl)
     return divEl
 }
 
@@ -122,3 +118,10 @@ const deleteNote = function (id) {
     renderNotes(notes)
 }
 
+/**
+ * 
+ * @param {get the time from the timestamp passed} timestamp 
+ */
+const latestModifiedTime = function (timestamp) {
+    return `last modified ${moment(timestamp).fromNow()}`
+}
