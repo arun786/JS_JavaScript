@@ -7,7 +7,7 @@ document.querySelector('#addNotesFrm').addEventListener('submit', e => {
     const now = moment().valueOf()
     notes.push({
         id: id,
-        note : textValue,
+        text : textValue,
         createdAt: now,
         updatedAt: now,
         textArea : textValue

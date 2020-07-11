@@ -7,20 +7,22 @@ const saveNotes = function (notes) {
 const getNotes = function () {
     const notes = localStorage.getItem('notes')
     if (notes !== null) {
-        return notes
+        return JSON.parse(notes)
     } else {
         return []
     }
 }
 
 const renderNotes = function (notes) {
+
     if (divElement !== null) {
         divElement.innerHTML = ''
     }
 
+
     notes.forEach(note => {
-        const dom = generateDomWithXButtonAndWithEventListener(note)
-        if (divElement != null) {
+        const dom = generateDomWithXElementAndLinkToNextPage(note)
+        if (divElement !== null) {
             divElement.appendChild(dom)
         }
     })
@@ -32,7 +34,7 @@ const renderNotes = function (notes) {
  */
 const generateDom = function (note) {
     const para = document.createElement('p')
-    para.textContent = note.note
+    para.textContent = note.text
     return para
 }
 
@@ -78,9 +80,45 @@ const generateDomWithXButtonAndWithEventListener = function (note) {
     return innerDivElement
 }
 
+/**
+ * 
+ * @param {add an event listener to button and link to next page} note 
+ */
+const generateDomWithXElementAndLinkToNextPage = function (note) {
+    //create a div element
+    const divEl = document.createElement('div')
+
+    const buttonEl = document.createElement('button')
+    buttonEl.innerText = 'x'
+
+    divEl.appendChild(buttonEl)
+
+    buttonEl.addEventListener('click', () => {
+        deleteNote(note.id)
+    })
+
+    //add an anchor
+    const anchorEl = document.createElement('a')
+    anchorEl.textContent = note.text
+    anchorEl.setAttribute('href', `edit.html#${note.id}`)
+
+    divEl.appendChild(anchorEl)
+
+    //add the text Area
+    const textAreaEl = document.createElement('span')
+    textAreaEl.textContent = note.textArea
+    divEl.appendChild(textAreaEl)
+    return divEl
+}
+
+/**
+ * 
+ * @param {deletes a note} id 
+ */
 const deleteNote = function (id) {
     const index = notes.findIndex(note => note.id === id)
     notes.splice(index, 1)
     saveNotes(notes)
     renderNotes(notes)
 }
+
