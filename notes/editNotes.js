@@ -1,6 +1,6 @@
 //first task get the notes from local storage
 
-const notes = getNotes()
+let notes = getNotes()
 
 //populate the textArea and text with the value from notes
 //to get the id passed from index.html
@@ -8,7 +8,7 @@ const notes = getNotes()
 const noteId = location.hash.substring(1)
 
 //get the individual note
-const note = notes.find(note => note.id === noteId)
+let note = notes.find(note => note.id === noteId)
 
 //if notes not found redirect to index.html
 if (note === undefined) {
@@ -50,5 +50,23 @@ textareEl.addEventListener('input', e => {
     saveNotes(notes)
     //add the time to div when the last modification was done
     spanEl.textContent = latestModifiedTime(note.modifiedAt)
+})
+
+//to reflect changes to a window when opened in more than 1 widow
+
+window.addEventListener('storage', e => {
+
+    console.log('arun'+ e.newValue)
+    if (e.key == 'notes') {
+        notes = JSON.parse(e.newValue)
+        note = notes.find(note => note.id === noteId)
+
+        if (note === undefined) {
+            location.assign("index.html")
+        }
+
+        textareEl.value = note.textArea
+        spanEl.textContent = latestModifiedTime(note.updatedAt)
+    }
 })
 

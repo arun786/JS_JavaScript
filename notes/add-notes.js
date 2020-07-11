@@ -1,4 +1,4 @@
-const notes = getNotes()
+let notes = getNotes()
 
 const filter = {
     searchText: '',
@@ -38,4 +38,14 @@ document.querySelector('#filter-by').addEventListener('change', e => {
     console.log(selection)
     filter.sortBy = selection
     renderNotes(notes,filter)
+})
+
+//changes in the a window can be reflected in more than 1 window
+
+window.addEventListener('storage', e=>{
+    console.log('inside notes')
+    if(e.key == 'notes'){
+        notes = JSON.parse(e.newValue)
+        renderNotes(notes,filter)
+    }
 })
