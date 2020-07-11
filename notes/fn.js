@@ -14,9 +14,45 @@ const getNotes = function () {
     }
 }
 
-const renderNotes = function (notes, filters) {
+//sort notes by one of the three ways
+const sortNotes = function (notes, sortBy) {
 
+    if (sortBy === 'byEdited') {
+        return notes.sort((a, b) => {
+            if (a.updatedAt > b.updatedAt) {
+                return -1
+            } else if (a.updatedAt < b.updatedAt) {
+                return 1
+            } else {
+                return 0
+            }
+        })
+    } else if (sortBy === 'byCreated') {
+        return notes.sort((a, b) => {
+            if (a.createdAt > b.createdAt) {
+                return -1
+            } else if (a.createdAt < b.createdAt) {
+                return 1
+            } else {
+                return 0
+            }
+        })
+    }
+    else {
+        return notes.sort((a, b) => {
+            if (a.text.toLowerCase() > b.text.toLowerCase()) {
+                return 1
+            } else if (a.text.toLowerCase() < b.text.toLowerCase()) {
+                return -1
+            } else {
+                return 0
+            }
+        })
+    }
+}
+const renderNotes = function (notes, filters) {
     if (filters !== undefined) {
+        notes = sortNotes(notes, filters.sortBy)
         notes = notes.filter(note => {
             return note.text.toLowerCase().includes(filters.searchText.toLowerCase())
         })

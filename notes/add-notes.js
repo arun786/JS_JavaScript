@@ -1,7 +1,8 @@
 const notes = getNotes()
 
 const filter = {
-    searchText: ''
+    searchText: '',
+    sortBy: 'byEdited'
 }
 
 const textNotes = document.querySelector('#filterNotesTxt')
@@ -19,15 +20,22 @@ document.querySelector('#addNotesFrm').addEventListener('submit', e => {
         textArea: textValue
     })
     saveNotes(notes)
-    renderNotes(notes,filter)
+    renderNotes(notes, filter)
 })
 
-renderNotes(notes,filter)
+renderNotes(notes, filter)
 
 
-document.querySelector('#filterTxt').addEventListener('input', e =>{
+document.querySelector('#filterTxt').addEventListener('input', e => {
     const enteredFilter = e.target.value
     console.log(enteredFilter)
     filter.searchText = enteredFilter
+    renderNotes(notes, filter)
+})
+
+document.querySelector('#filter-by').addEventListener('change', e => {
+    const selection = e.target.value
+    console.log(selection)
+    filter.sortBy = selection
     renderNotes(notes,filter)
 })

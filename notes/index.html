@@ -5,10 +5,16 @@
 
 <body>
     <input id="filterTxt" type="text" placeholder="type to filter">
+    <select name="sort" id="filter-by">
+        <option value="byEdited">Sort by Last Edited</option>
+        <option value="byCreated">Sort by Created</option>
+        <option value="byAlphabet">Sort Alphabetically</option>
+    </select>
     <form id="addNotesFrm">
         <input type="text" id="addNotesTxt" placeholder="add notes here">
         <button>Add Notes</button>
     </form>
+
 
     <div id="addNotesDiv"></div>
 
