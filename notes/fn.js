@@ -1,5 +1,6 @@
 const divElement = document.querySelector('#addNotesDiv')
 
+
 const saveNotes = function (notes) {
     localStorage.setItem('notes', JSON.stringify(notes))
 }
@@ -13,12 +14,17 @@ const getNotes = function () {
     }
 }
 
-const renderNotes = function (notes) {
+const renderNotes = function (notes, filters) {
+
+    if (filters !== undefined) {
+        notes = notes.filter(note => {
+            return note.text.toLowerCase().includes(filters.searchText.toLowerCase())
+        })
+    }
 
     if (divElement !== null) {
         divElement.innerHTML = ''
     }
-
 
     notes.forEach(note => {
         const dom = generateDomWithXElementAndLinkToNextPage(note)
@@ -115,7 +121,7 @@ const deleteNote = function (id) {
     const index = notes.findIndex(note => note.id === id)
     notes.splice(index, 1)
     saveNotes(notes)
-    renderNotes(notes)
+    renderNotes(notes, undefined)
 }
 
 /**
