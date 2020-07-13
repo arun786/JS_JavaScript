@@ -1,3 +1,5 @@
+'use strict'
+
 const divElement = document.querySelector('#addNotesDiv')
 
 
@@ -7,7 +9,12 @@ const saveNotes = (notes) => {
 
 const getNotes = () => {
     const notes = localStorage.getItem('notes')
-    return notes != null ? JSON.parse(notes) : []
+    try{
+        return notes != null ? JSON.parse(notes) : []
+    }catch(e){
+        return []
+    }
+    
 }
 
 //sort notes by one of the three ways,
