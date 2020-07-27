@@ -1,21 +1,24 @@
+'use strict'
+
 const divElement = document.querySelector('#addNotesDiv')
 
 
-const saveNotes = function (notes) {
+const saveNotes = (notes) => {
     localStorage.setItem('notes', JSON.stringify(notes))
 }
 
-const getNotes = function () {
+const getNotes = () => {
     const notes = localStorage.getItem('notes')
-    if (notes !== null) {
-        return JSON.parse(notes)
-    } else {
+    try{
+        return notes != null ? JSON.parse(notes) : []
+    }catch(e){
         return []
     }
+    
 }
 
-//sort notes by one of the three ways
-const sortNotes = function (notes, sortBy) {
+//sort notes by one of the three ways,
+const sortNotes = (notes, sortBy) => {
 
     if (sortBy === 'byEdited') {
         return notes.sort((a, b) => {
@@ -50,7 +53,7 @@ const sortNotes = function (notes, sortBy) {
         })
     }
 }
-const renderNotes = function (notes, filters) {
+const renderNotes = (notes, filters) => {
     if (filters !== undefined) {
         notes = sortNotes(notes, filters.sortBy)
         notes = notes.filter(note => {
@@ -74,7 +77,7 @@ const renderNotes = function (notes, filters) {
  * if you want to add a particular item in a paragraph
  * @param {a specific note which you want to display} note 
  */
-const generateDom = function (note) {
+const generateDom = (note) => {
     const para = document.createElement('p')
     para.textContent = note.text
     return para
@@ -84,7 +87,7 @@ const generateDom = function (note) {
  * if you want to add a button(x) with text next to it
  * @param {a specific note with a button before it} note 
  */
-const generateDomWithXButton = function (note) {
+const generateDomWithXButton = (note) => {
     const innerDivElement = document.createElement('div')
 
     const innerButtonElement = document.createElement('button')
@@ -101,7 +104,7 @@ const generateDomWithXButton = function (note) {
  * 
  * @param {add an event listener to the button} note 
  */
-const generateDomWithXButtonAndWithEventListener = function (note) {
+const generateDomWithXButtonAndWithEventListener = (note) => {
     //create a div element 
     const innerDivElement = document.createElement('div')
 
@@ -126,7 +129,7 @@ const generateDomWithXButtonAndWithEventListener = function (note) {
  * 
  * @param {add an event listener to button and link to next page} note 
  */
-const generateDomWithXElementAndLinkToNextPage = function (note) {
+const generateDomWithXElementAndLinkToNextPage = (note) => {
     //create a div element
     const divEl = document.createElement('div')
 
@@ -153,7 +156,7 @@ const generateDomWithXElementAndLinkToNextPage = function (note) {
  * 
  * @param {deletes a note} id 
  */
-const deleteNote = function (id) {
+const deleteNote = (id) => {
     const index = notes.findIndex(note => note.id === id)
     notes.splice(index, 1)
     saveNotes(notes)
@@ -164,6 +167,6 @@ const deleteNote = function (id) {
  * 
  * @param {get the time from the timestamp passed} timestamp 
  */
-const latestModifiedTime = function (timestamp) {
+const latestModifiedTime = (timestamp) => {
     return `last modified ${moment(timestamp).fromNow()}`
 }
